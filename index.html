@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DealsDray V4.6.4 Test Automation Reports Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(26, 35, 54, 0.9);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(56, 189, 248, 0.3);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-purple: #a855f7;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --badge-cmt: #0284c7;
+      --badge-admin: #8b5cf6;
+      --badge-order: #10b981;
+      --badge-checklist: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* HEADER */
+    .header {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+    }
+
+    .logo-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: #ffffff;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .version-tag {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.25rem 0.65rem;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .links-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .gh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .gh-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .gh-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .header-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 800px;
+      line-height: 1.6;
+    }
+
+    /* STATS ROW */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-blue);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .stat-card.total::before { background: linear-gradient(to bottom, #3b82f6, #8b5cf6); }
+    .stat-card.cmt::before { background: #0284c7; }
+    .stat-card.admin::before { background: #8b5cf6; }
+    .stat-card.order::before { background: #10b981; }
+    .stat-card.checklist::before { background: #f59e0b; }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* CONTROLS BAR */
+    .controls-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.8rem;
+      background: rgba(10, 14, 23, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(139, 92, 246, 0.25));
+      border-color: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+
+    .tab-badge {
+      font-size: 0.75rem;
+      padding: 0.1rem 0.45rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* REPORTS GRID */
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .report-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .report-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .report-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+      gap: 0.75rem;
+    }
+
+    .module-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .module-badge.CMT { background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.4); }
+    .module-badge.superadmin { background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4); }
+    .module-badge.orderFulfilment { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .module-badge.orderFulFilmentChecklist { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    .submodule-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .report-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .report-path-preview {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #64748b;
+      margin-bottom: 1.1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .open-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .open-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8, #4338ca);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .open-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      fill: none;
+      stroke: var(--text-muted);
+      stroke-width: 1.5;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      .reports-grid {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">
+        <div class="brand-title">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <h1>DealsDray Test Automation Portal</h1>
+              <span class="version-tag">v4.6.4</span>
+            </div>
+            <p class="header-sub">Comprehensive interactive Playwright execution reports across CMT, SuperAdmin, Order Fulfilment, and Verification Checklist suites.</p>
+          </div>
+        </div>
+        <div class="links-bar">
+          <a href="https://github.com/Virajnaik31/DD_v4.6.4_Report" target="_blank" rel="noopener noreferrer" class="gh-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub Repository
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS ROW -->
+    <div class="stats-grid">
+      <div class="stat-card total" onclick="filterByModule('ALL')">
+        <span class="stat-label">Total Reports</span>
+        <span class="stat-value">145</span>
+      </div>
+      <div class="stat-card cmt" onclick="filterByModule('CMT')">
+        <span class="stat-label">CMT Suite</span>
+        <span class="stat-value">33</span>
+      </div>
+      <div class="stat-card admin" onclick="filterByModule('superadmin')">
+        <span class="stat-label">SuperAdmin Suite</span>
+        <span class="stat-value">54</span>
+      </div>
+      <div class="stat-card order" onclick="filterByModule('orderFulfilment')">
+        <span class="stat-label">Order Fulfilment</span>
+        <span class="stat-value">10</span>
+      </div>
+      <div class="stat-card checklist" onclick="filterByModule('orderFulFilmentChecklist')">
+        <span class="stat-label">Checklist Cases</span>
+        <span class="stat-value">48</span>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls-panel">
+      <div class="search-row">
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24"><path d="M21.71 20.29l-5.4-5.4A8.93 8.93 0 0018 9a9 9 0 10-9 9 8.93 8.93 0 005.89-1.69l5.4 5.4a1 1 0 001.42 0 1 1 0 000-1.42zM4 9a7 7 0 117 7 7 7 0 01-7-7z"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by test name, module, case ID (e.g. brandMaster, case021, CO_01)..." oninput="handleSearch()" />
+        </div>
+      </div>
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="ALL" onclick="filterByModule('ALL')">
+          All Reports <span class="tab-badge">145</span>
+        </button>
+        <button class="tab-btn" data-filter="CMT" onclick="filterByModule('CMT')">
+          CMT <span class="tab-badge">33</span>
+        </button>
+        <button class="tab-btn" data-filter="superadmin" onclick="filterByModule('superadmin')">
+          SuperAdmin <span class="tab-badge">54</span>
+        </button>
+        <button class="tab-btn" data-filter="orderFulfilment" onclick="filterByModule('orderFulfilment')">
+          Order Fulfilment <span class="tab-badge">10</span>
+        </button>
+        <button class="tab-btn" data-filter="orderFulFilmentChecklist" onclick="filterByModule('orderFulFilmentChecklist')">
+          Checklist Cases <span class="tab-badge">48</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- REPORT LIST -->
+    <div class="reports-grid" id="reportsGrid">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>DealsDray Automation Engineering Team • UAT Version 4.6.4</div>
+      <div>Hosted via GitHub Pages & Fastly CDN</div>
+    </footer>
+  </div>
+
+  <script>
+    const reportsData = [{"id":1,"module":"CMT","subModule":"brandMaster","reportName":"brandMaster1","path":"CMT/brandMaster/brandMaster1_report/index.html","fullTitle":"CMT • brandMaster • brandMaster1"},{"id":2,"module":"CMT","subModule":"brandMaster","reportName":"brandMaster2","path":"CMT/brandMaster/brandMaster2_report/index.html","fullTitle":"CMT • brandMaster • brandMaster2"},{"id":3,"module":"CMT","subModule":"bulkproductsDelete","reportName":"bulkDelte1","path":"CMT/bulkproductsDelete/bulkDelte1_report/index.html","fullTitle":"CMT • bulkproductsDelete • bulkDelte1"},{"id":4,"module":"CMT","subModule":"campaignBanner","reportName":"campaignBanner1","path":"CMT/campaignBanner/campaignBanner1_report/index.html","fullTitle":"CMT • campaignBanner • campaignBanner1"},{"id":5,"module":"CMT","subModule":"campaignBanner","reportName":"campaignBanner2","path":"CMT/campaignBanner/campaignBanner2_report/index.html","fullTitle":"CMT • campaignBanner • campaignBanner2"},{"id":6,"module":"CMT","subModule":"categoryMaster","reportName":"categoryMaster1","path":"CMT/categoryMaster/categoryMaster1_report/index.html","fullTitle":"CMT • categoryMaster • categoryMaster1"},{"id":7,"module":"CMT","subModule":"categoryMaster","reportName":"categoryMaster2","path":"CMT/categoryMaster/categoryMaster2_report/index.html","fullTitle":"CMT • categoryMaster • categoryMaster2"},{"id":8,"module":"CMT","subModule":"couponCodes","reportName":"couponCodes1","path":"CMT/couponCodes/couponCodes1_report/index.html","fullTitle":"CMT • couponCodes • couponCodes1"},{"id":9,"module":"CMT","subModule":"couponCodes","reportName":"couponCodes2","path":"CMT/couponCodes/couponCodes2_report/index.html","fullTitle":"CMT • couponCodes • couponCodes2"},{"id":10,"module":"CMT","subModule":"couponCodes","reportName":"couponCodes3","path":"CMT/couponCodes/couponCodes3_report/index.html","fullTitle":"CMT • couponCodes • couponCodes3"},{"id":11,"module":"CMT","subModule":"dashboard","reportName":"dashboard1","path":"CMT/dashboard/dashboard1_report/index.html","fullTitle":"CMT • dashboard • dashboard1"},{"id":12,"module":"CMT","subModule":"exclusiveListing","reportName":"exclusiveListing1","path":"CMT/exclusiveListing/exclusiveListing1_report/index.html","fullTitle":"CMT • exclusiveListing • exclusiveListing1"},{"id":13,"module":"CMT","subModule":"exclusiveListing","reportName":"exclusiveListing2","path":"CMT/exclusiveListing/exclusiveListing2_report/index.html","fullTitle":"CMT • exclusiveListing • exclusiveListing2"},{"id":14,"module":"CMT","subModule":"exclusiveListing","reportName":"exclusiveListing3","path":"CMT/exclusiveListing/exclusiveListing3_report/index.html","fullTitle":"CMT • exclusiveListing • exclusiveListing3"},{"id":15,"module":"CMT","subModule":"gradeMaster","reportName":"gradeMaster1","path":"CMT/gradeMaster/gradeMaster1_report/index.html","fullTitle":"CMT • gradeMaster • gradeMaster1"},{"id":16,"module":"CMT","subModule":"liveListing","reportName":"liveListing1","path":"CMT/liveListing/liveListing1_report/index.html","fullTitle":"CMT • liveListing • liveListing1"},{"id":17,"module":"CMT","subModule":"manageLP","reportName":"manageLP1","path":"CMT/manageLP/manageLP1_report/index.html","fullTitle":"CMT • manageLP • manageLP1"},{"id":18,"module":"CMT","subModule":"manageLP","reportName":"manageLP2","path":"CMT/manageLP/manageLP2_report/index.html","fullTitle":"CMT • manageLP • manageLP2"},{"id":19,"module":"CMT","subModule":"productAD","reportName":"productAD1","path":"CMT/productAD/productAD1_report/index.html","fullTitle":"CMT • productAD • productAD1"},{"id":20,"module":"CMT","subModule":"productApproval","reportName":"productApproval1","path":"CMT/productApproval/productApproval1_report/index.html","fullTitle":"CMT • productApproval • productApproval1"},{"id":21,"module":"CMT","subModule":"productApproval","reportName":"productApproval2","path":"CMT/productApproval/productApproval2_report/index.html","fullTitle":"CMT • productApproval • productApproval2"},{"id":22,"module":"CMT","subModule":"productListingApproval","reportName":"productListingApproval1","path":"CMT/productListingApproval/productListingApproval1_report/index.html","fullTitle":"CMT • productListingApproval • productListingApproval1"},{"id":23,"module":"CMT","subModule":"productListingApproval","reportName":"productListingApproval2","path":"CMT/productListingApproval/productListingApproval2_report/index.html","fullTitle":"CMT • productListingApproval • productListingApproval2"},{"id":24,"module":"CMT","subModule":"productMaster","reportName":"productMaster1","path":"CMT/productMaster/productMaster1_report/index.html","fullTitle":"CMT • productMaster • productMaster1"},{"id":25,"module":"CMT","subModule":"productMaster","reportName":"productMaster2","path":"CMT/productMaster/productMaster2_report/index.html","fullTitle":"CMT • productMaster • productMaster2"},{"id":26,"module":"CMT","subModule":"productMaster","reportName":"productMaster3","path":"CMT/productMaster/productMaster3_report/index.html","fullTitle":"CMT • productMaster • productMaster3"},{"id":27,"module":"CMT","subModule":"productStockIMEI&productIMEIApproval","reportName":"productStockIMEI1","path":"CMT/productStockIMEI&productIMEIApproval/productStockIMEI1_report/index.html","fullTitle":"CMT • productStockIMEI&productIMEIApproval • productStockIMEI1"},{"id":28,"module":"CMT","subModule":"productStockIMEI&productIMEIApproval","reportName":"productStockIMEI21","path":"CMT/productStockIMEI&productIMEIApproval/productStockIMEI21_report/index.html","fullTitle":"CMT • productStockIMEI&productIMEIApproval • productStockIMEI21"},{"id":29,"module":"CMT","subModule":"productStockIMEI&productIMEIApproval","reportName":"productStockIMEI22","path":"CMT/productStockIMEI&productIMEIApproval/productStockIMEI22_report/index.html","fullTitle":"CMT • productStockIMEI&productIMEIApproval • productStockIMEI22"},{"id":30,"module":"CMT","subModule":"productStockIMEI&productIMEIApproval","reportName":"productStockIMEI23","path":"CMT/productStockIMEI&productIMEIApproval/productStockIMEI23_report/index.html","fullTitle":"CMT • productStockIMEI&productIMEIApproval • productStockIMEI23"},{"id":31,"module":"CMT","subModule":"productStockIMEI&productIMEIApproval","reportName":"productStockIMEI24","path":"CMT/productStockIMEI&productIMEIApproval/productStockIMEI24_report/index.html","fullTitle":"CMT • productStockIMEI&productIMEIApproval • productStockIMEI24"},{"id":32,"module":"CMT","subModule":"staticContent","reportName":"staticContent1","path":"CMT/staticContent/staticContent1_report/index.html","fullTitle":"CMT • staticContent • staticContent1"},{"id":33,"module":"CMT","subModule":"staticContent","reportName":"staticContent2","path":"CMT/staticContent/staticContent2_report/index.html","fullTitle":"CMT • staticContent • staticContent2"},{"id":34,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step01","path":"orderFulfilment/selfPickup/step01_report/index.html","fullTitle":"orderFulfilment • selfPickup • step01"},{"id":35,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step02","path":"orderFulfilment/selfPickup/step02_report/index.html","fullTitle":"orderFulfilment • selfPickup • step02"},{"id":36,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step03","path":"orderFulfilment/selfPickup/step03_report/index.html","fullTitle":"orderFulfilment • selfPickup • step03"},{"id":37,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step04","path":"orderFulfilment/selfPickup/step04_report/index.html","fullTitle":"orderFulfilment • selfPickup • step04"},{"id":38,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step05","path":"orderFulfilment/selfPickup/step05_report/index.html","fullTitle":"orderFulfilment • selfPickup • step05"},{"id":39,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step06","path":"orderFulfilment/selfPickup/step06_report/index.html","fullTitle":"orderFulfilment • selfPickup • step06"},{"id":40,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step07","path":"orderFulfilment/selfPickup/step07_report/index.html","fullTitle":"orderFulfilment • selfPickup • step07"},{"id":41,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step08","path":"orderFulfilment/selfPickup/step08_report/index.html","fullTitle":"orderFulfilment • selfPickup • step08"},{"id":42,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step09","path":"orderFulfilment/selfPickup/step09_report/index.html","fullTitle":"orderFulfilment • selfPickup • step09"},{"id":43,"module":"orderFulfilment","subModule":"selfPickup","reportName":"step10","path":"orderFulfilment/selfPickup/step10_report/index.html","fullTitle":"orderFulfilment • selfPickup • step10"},{"id":44,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case001","path":"orderFulFilmentChecklist/case-001-020/case001_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case001"},{"id":45,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case002","path":"orderFulFilmentChecklist/case-001-020/case002_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case002"},{"id":46,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case003","path":"orderFulFilmentChecklist/case-001-020/case003_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case003"},{"id":47,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case004","path":"orderFulFilmentChecklist/case-001-020/case004_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case004"},{"id":48,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case005","path":"orderFulFilmentChecklist/case-001-020/case005_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case005"},{"id":49,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case006","path":"orderFulFilmentChecklist/case-001-020/case006_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case006"},{"id":50,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case007","path":"orderFulFilmentChecklist/case-001-020/case007_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case007"},{"id":51,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case008","path":"orderFulFilmentChecklist/case-001-020/case008_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case008"},{"id":52,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case009","path":"orderFulFilmentChecklist/case-001-020/case009_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case009"},{"id":53,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case010","path":"orderFulFilmentChecklist/case-001-020/case010_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case010"},{"id":54,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case011","path":"orderFulFilmentChecklist/case-001-020/case011_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case011"},{"id":55,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case012","path":"orderFulFilmentChecklist/case-001-020/case012_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case012"},{"id":56,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case013","path":"orderFulFilmentChecklist/case-001-020/case013_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case013"},{"id":57,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case014","path":"orderFulFilmentChecklist/case-001-020/case014_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case014"},{"id":58,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case015","path":"orderFulFilmentChecklist/case-001-020/case015_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case015"},{"id":59,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case016","path":"orderFulFilmentChecklist/case-001-020/case016_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case016"},{"id":60,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case017","path":"orderFulFilmentChecklist/case-001-020/case017_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case017"},{"id":61,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case018","path":"orderFulFilmentChecklist/case-001-020/case018_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case018"},{"id":62,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case019","path":"orderFulFilmentChecklist/case-001-020/case019_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case019"},{"id":63,"module":"orderFulFilmentChecklist","subModule":"case-001-020","reportName":"case020","path":"orderFulFilmentChecklist/case-001-020/case020_report/index.html","fullTitle":"orderFulFilmentChecklist • case-001-020 • case020"},{"id":64,"module":"orderFulFilmentChecklist","subModule":"case021","reportName":"case021","path":"orderFulFilmentChecklist/case021_report/index.html","fullTitle":"orderFulFilmentChecklist • case021 • case021"},{"id":65,"module":"orderFulFilmentChecklist","subModule":"case022","reportName":"case022","path":"orderFulFilmentChecklist/case022_report/index.html","fullTitle":"orderFulFilmentChecklist • case022 • case022"},{"id":66,"module":"orderFulFilmentChecklist","subModule":"case023","reportName":"case023","path":"orderFulFilmentChecklist/case023_report/index.html","fullTitle":"orderFulFilmentChecklist • case023 • case023"},{"id":67,"module":"orderFulFilmentChecklist","subModule":"case024","reportName":"case024","path":"orderFulFilmentChecklist/case024_report/index.html","fullTitle":"orderFulFilmentChecklist • case024 • case024"},{"id":68,"module":"orderFulFilmentChecklist","subModule":"case025","reportName":"case025","path":"orderFulFilmentChecklist/case025_report/index.html","fullTitle":"orderFulFilmentChecklist • case025 • case025"},{"id":69,"module":"orderFulFilmentChecklist","subModule":"case026","reportName":"case026","path":"orderFulFilmentChecklist/case026_report/index.html","fullTitle":"orderFulFilmentChecklist • case026 • case026"},{"id":70,"module":"orderFulFilmentChecklist","subModule":"case027","reportName":"case027","path":"orderFulFilmentChecklist/case027_report/index.html","fullTitle":"orderFulFilmentChecklist • case027 • case027"},{"id":71,"module":"orderFulFilmentChecklist","subModule":"case028","reportName":"case028","path":"orderFulFilmentChecklist/case028_report/index.html","fullTitle":"orderFulFilmentChecklist • case028 • case028"},{"id":72,"module":"orderFulFilmentChecklist","subModule":"case029","reportName":"case029","path":"orderFulFilmentChecklist/case029_report/index.html","fullTitle":"orderFulFilmentChecklist • case029 • case029"},{"id":73,"module":"orderFulFilmentChecklist","subModule":"case030","reportName":"case030","path":"orderFulFilmentChecklist/case030_report/index.html","fullTitle":"orderFulFilmentChecklist • case030 • case030"},{"id":74,"module":"orderFulFilmentChecklist","subModule":"case031","reportName":"case031","path":"orderFulFilmentChecklist/case031_report/index.html","fullTitle":"orderFulFilmentChecklist • case031 • case031"},{"id":75,"module":"orderFulFilmentChecklist","subModule":"case032","reportName":"case032","path":"orderFulFilmentChecklist/case032_report/index.html","fullTitle":"orderFulFilmentChecklist • case032 • case032"},{"id":76,"module":"orderFulFilmentChecklist","subModule":"case033","reportName":"case033","path":"orderFulFilmentChecklist/case033_report/index.html","fullTitle":"orderFulFilmentChecklist • case033 • case033"},{"id":77,"module":"orderFulFilmentChecklist","subModule":"case034","reportName":"case034","path":"orderFulFilmentChecklist/case034_report/index.html","fullTitle":"orderFulFilmentChecklist • case034 • case034"},{"id":78,"module":"orderFulFilmentChecklist","subModule":"case035","reportName":"case035","path":"orderFulFilmentChecklist/case035_report/index.html","fullTitle":"orderFulFilmentChecklist • case035 • case035"},{"id":79,"module":"orderFulFilmentChecklist","subModule":"case036","reportName":"case036","path":"orderFulFilmentChecklist/case036_report/index.html","fullTitle":"orderFulFilmentChecklist • case036 • case036"},{"id":80,"module":"orderFulFilmentChecklist","subModule":"case037","reportName":"case037","path":"orderFulFilmentChecklist/case037_report/index.html","fullTitle":"orderFulFilmentChecklist • case037 • case037"},{"id":81,"module":"orderFulFilmentChecklist","subModule":"case038","reportName":"case038","path":"orderFulFilmentChecklist/case038_report/index.html","fullTitle":"orderFulFilmentChecklist • case038 • case038"},{"id":82,"module":"orderFulFilmentChecklist","subModule":"case039","reportName":"case039","path":"orderFulFilmentChecklist/case039_report/index.html","fullTitle":"orderFulFilmentChecklist • case039 • case039"},{"id":83,"module":"orderFulFilmentChecklist","subModule":"case040","reportName":"case040","path":"orderFulFilmentChecklist/case040_report/index.html","fullTitle":"orderFulFilmentChecklist • case040 • case040"},{"id":84,"module":"orderFulFilmentChecklist","subModule":"case041","reportName":"case041","path":"orderFulFilmentChecklist/case041_report/index.html","fullTitle":"orderFulFilmentChecklist • case041 • case041"},{"id":85,"module":"orderFulFilmentChecklist","subModule":"case042","reportName":"case042","path":"orderFulFilmentChecklist/case042_report/index.html","fullTitle":"orderFulFilmentChecklist • case042 • case042"},{"id":86,"module":"orderFulFilmentChecklist","subModule":"case043","reportName":"case043","path":"orderFulFilmentChecklist/case043_report/index.html","fullTitle":"orderFulFilmentChecklist • case043 • case043"},{"id":87,"module":"orderFulFilmentChecklist","subModule":"case044","reportName":"case044","path":"orderFulFilmentChecklist/case044_report/index.html","fullTitle":"orderFulFilmentChecklist • case044 • case044"},{"id":88,"module":"orderFulFilmentChecklist","subModule":"case045","reportName":"case045","path":"orderFulFilmentChecklist/case045_report/index.html","fullTitle":"orderFulFilmentChecklist • case045 • case045"},{"id":89,"module":"orderFulFilmentChecklist","subModule":"case046","reportName":"case046","path":"orderFulFilmentChecklist/case046_report/index.html","fullTitle":"orderFulFilmentChecklist • case046 • case046"},{"id":90,"module":"orderFulFilmentChecklist","subModule":"case048","reportName":"case048","path":"orderFulFilmentChecklist/case048_report/index.html","fullTitle":"orderFulFilmentChecklist • case048 • case048"},{"id":91,"module":"orderFulFilmentChecklist","subModule":"case049","reportName":"case049","path":"orderFulFilmentChecklist/case049_report/index.html","fullTitle":"orderFulFilmentChecklist • case049 • case049"},{"id":92,"module":"superadmin","subModule":"buyerEdit","reportName":"buyerEdit1","path":"superadmin/buyerEdit/buyerEdit1_report/index.html","fullTitle":"superadmin • buyerEdit • buyerEdit1"},{"id":93,"module":"superadmin","subModule":"buyerLedger","reportName":"buyerLedger1","path":"superadmin/buyerLedger/buyerLedger1_report/index.html","fullTitle":"superadmin • buyerLedger • buyerLedger1"},{"id":94,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 01","path":"superadmin/cancelOrder/CO_01_report/index.html","fullTitle":"superadmin • cancelOrder • CO 01"},{"id":95,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 02","path":"superadmin/cancelOrder/CO_02_report/index.html","fullTitle":"superadmin • cancelOrder • CO 02"},{"id":96,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 03","path":"superadmin/cancelOrder/CO_03_report/index.html","fullTitle":"superadmin • cancelOrder • CO 03"},{"id":97,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 04","path":"superadmin/cancelOrder/CO_04_report/index.html","fullTitle":"superadmin • cancelOrder • CO 04"},{"id":98,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 05","path":"superadmin/cancelOrder/CO_05_report/index.html","fullTitle":"superadmin • cancelOrder • CO 05"},{"id":99,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 06","path":"superadmin/cancelOrder/CO_06_report/index.html","fullTitle":"superadmin • cancelOrder • CO 06"},{"id":100,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 07","path":"superadmin/cancelOrder/CO_07_report/index.html","fullTitle":"superadmin • cancelOrder • CO 07"},{"id":101,"module":"superadmin","subModule":"cancelOrder","reportName":"CO 08","path":"superadmin/cancelOrder/CO_08_report/index.html","fullTitle":"superadmin • cancelOrder • CO 08"},{"id":102,"module":"superadmin","subModule":"coupons&couponApproval","reportName":"coupons1","path":"superadmin/coupons&couponApproval/coupons1_report/index.html","fullTitle":"superadmin • coupons&couponApproval • coupons1"},{"id":103,"module":"superadmin","subModule":"coupons&couponApproval","reportName":"coupons2","path":"superadmin/coupons&couponApproval/coupons2_report/index.html","fullTitle":"superadmin • coupons&couponApproval • coupons2"},{"id":104,"module":"superadmin","subModule":"customerSupport","reportName":"customerSupport1","path":"superadmin/customerSupport/customerSupport1_report/index.html","fullTitle":"superadmin • customerSupport • customerSupport1"},{"id":105,"module":"superadmin","subModule":"departments","reportName":"create new department","path":"superadmin/departments/create_new_department_report/index.html","fullTitle":"superadmin • departments • create new department"},{"id":106,"module":"superadmin","subModule":"departments","reportName":"create new team member","path":"superadmin/departments/create_new_team_member_report/index.html","fullTitle":"superadmin • departments • create new team member"},{"id":107,"module":"superadmin","subModule":"departments","reportName":"delete department","path":"superadmin/departments/delete_department_report/index.html","fullTitle":"superadmin • departments • delete department"},{"id":108,"module":"superadmin","subModule":"departments","reportName":"duplicate department","path":"superadmin/departments/duplicate_department_report/index.html","fullTitle":"superadmin • departments • duplicate department"},{"id":109,"module":"superadmin","subModule":"departments","reportName":"edit rm department","path":"superadmin/departments/edit_rm_department_report/index.html","fullTitle":"superadmin • departments • edit rm department"},{"id":110,"module":"superadmin","subModule":"departments","reportName":"rename department","path":"superadmin/departments/rename_department_report/index.html","fullTitle":"superadmin • departments • rename department"},{"id":111,"module":"superadmin","subModule":"designations","reportName":"create new designation","path":"superadmin/designations/create_new_designation_report/index.html","fullTitle":"superadmin • designations • create new designation"},{"id":112,"module":"superadmin","subModule":"designations","reportName":"delete designation","path":"superadmin/designations/delete_designation_report/index.html","fullTitle":"superadmin • designations • delete designation"},{"id":113,"module":"superadmin","subModule":"designations","reportName":"duplicate designation","path":"superadmin/designations/duplicate_designation_report/index.html","fullTitle":"superadmin • designations • duplicate designation"},{"id":114,"module":"superadmin","subModule":"designations","reportName":"search designation","path":"superadmin/designations/search_designation_report/index.html","fullTitle":"superadmin • designations • search designation"},{"id":115,"module":"superadmin","subModule":"designations","reportName":"team member designation","path":"superadmin/designations/team_member_designation_report/index.html","fullTitle":"superadmin • designations • team member designation"},{"id":116,"module":"superadmin","subModule":"districtMaster","reportName":"districtMaster1","path":"superadmin/districtMaster/districtMaster1_report/index.html","fullTitle":"superadmin • districtMaster • districtMaster1"},{"id":117,"module":"superadmin","subModule":"emailTemplate","reportName":"emailTemplate1","path":"superadmin/emailTemplate/emailTemplate1_report/index.html","fullTitle":"superadmin • emailTemplate • emailTemplate1"},{"id":118,"module":"superadmin","subModule":"holidayMaster","reportName":"holidayMaster1","path":"superadmin/holidayMaster/holidayMaster1_report/index.html","fullTitle":"superadmin • holidayMaster • holidayMaster1"},{"id":119,"module":"superadmin","subModule":"locationMaster","reportName":"locationMaster1","path":"superadmin/locationMaster/locationMaster1_report/index.html","fullTitle":"superadmin • locationMaster • locationMaster1"},{"id":120,"module":"superadmin","subModule":"login","reportName":"invalid","path":"superadmin/login/invalid_report/index.html","fullTitle":"superadmin • login • invalid"},{"id":121,"module":"superadmin","subModule":"login","reportName":"valid","path":"superadmin/login/valid_report/index.html","fullTitle":"superadmin • login • valid"},{"id":122,"module":"superadmin","subModule":"logisticMaster","reportName":"logisticMaster1","path":"superadmin/logisticMaster/logisticMaster1_report/index.html","fullTitle":"superadmin • logisticMaster • logisticMaster1"},{"id":123,"module":"superadmin","subModule":"manageShipping","reportName":"manageShipping1","path":"superadmin/manageShipping/manageShipping1_report/index.html","fullTitle":"superadmin • manageShipping • manageShipping1"},{"id":124,"module":"superadmin","subModule":"manageShipping","reportName":"manageShipping2","path":"superadmin/manageShipping/manageShipping2_report/index.html","fullTitle":"superadmin • manageShipping • manageShipping2"},{"id":125,"module":"superadmin","subModule":"movAll","reportName":"movAll1","path":"superadmin/movAll/movAll1_report/index.html","fullTitle":"superadmin • movAll • movAll1"},{"id":126,"module":"superadmin","subModule":"pincodeMaster","reportName":"pincodeMaster1","path":"superadmin/pincodeMaster/pincodeMaster1_report/index.html","fullTitle":"superadmin • pincodeMaster • pincodeMaster1"},{"id":127,"module":"superadmin","subModule":"productTypeMaster","reportName":"productTypeMaster1","path":"superadmin/productTypeMaster/productTypeMaster1_report/index.html","fullTitle":"superadmin • productTypeMaster • productTypeMaster1"},{"id":128,"module":"superadmin","subModule":"quote&feedback","reportName":"veiw feedback","path":"superadmin/quote&feedback/veiw_feedback_report/index.html","fullTitle":"superadmin • quote&feedback • veiw feedback"},{"id":129,"module":"superadmin","subModule":"quote&feedback","reportName":"view quote","path":"superadmin/quote&feedback/view_quote_report/index.html","fullTitle":"superadmin • quote&feedback • view quote"},{"id":130,"module":"superadmin","subModule":"stateMaster","reportName":"stateMaster1","path":"superadmin/stateMaster/stateMaster1_report/index.html","fullTitle":"superadmin • stateMaster • stateMaster1"},{"id":131,"module":"superadmin","subModule":"stock correction","reportName":"verify stock decrease","path":"superadmin/stock_correction/verify_stock_decrease_report/index.html","fullTitle":"superadmin • stock correction • verify stock decrease"},{"id":132,"module":"superadmin","subModule":"stock correction","reportName":"verify stock increase","path":"superadmin/stock_correction/verify_stock_increase_report/index.html","fullTitle":"superadmin • stock correction • verify stock increase"},{"id":133,"module":"superadmin","subModule":"team member master","reportName":"activate team member","path":"superadmin/team_member_master/activate_team_member_report/index.html","fullTitle":"superadmin • team member master • activate team member"},{"id":134,"module":"superadmin","subModule":"team member master","reportName":"bulkactivate","path":"superadmin/team_member_master/bulkactivate_report/index.html","fullTitle":"superadmin • team member master • bulkactivate"},{"id":135,"module":"superadmin","subModule":"team member master","reportName":"bulk deactivate","path":"superadmin/team_member_master/bulk_deactivate_report/index.html","fullTitle":"superadmin • team member master • bulk deactivate"},{"id":136,"module":"superadmin","subModule":"team member master","reportName":"create pack member","path":"superadmin/team_member_master/create_pack_member_report/index.html","fullTitle":"superadmin • team member master • create pack member"},{"id":137,"module":"superadmin","subModule":"team member master","reportName":"create rm checker login","path":"superadmin/team_member_master/create_rm_checker_login_report/index.html","fullTitle":"superadmin • team member master • create rm checker login"},{"id":138,"module":"superadmin","subModule":"team member master","reportName":"create warehouse user access","path":"superadmin/team_member_master/create_warehouse_user_access_report/index.html","fullTitle":"superadmin • team member master • create warehouse user access"},{"id":139,"module":"superadmin","subModule":"team member master","reportName":"deactivate team member","path":"superadmin/team_member_master/deactivate_team_member_report/index.html","fullTitle":"superadmin • team member master • deactivate team member"},{"id":140,"module":"superadmin","subModule":"team member master","reportName":"duplicate email","path":"superadmin/team_member_master/duplicate_email_report/index.html","fullTitle":"superadmin • team member master • duplicate email"},{"id":141,"module":"superadmin","subModule":"team member master","reportName":"duplicate phone","path":"superadmin/team_member_master/duplicate_phone_report/index.html","fullTitle":"superadmin • team member master • duplicate phone"},{"id":142,"module":"superadmin","subModule":"team member master","reportName":"incorrect heirarchy member","path":"superadmin/team_member_master/incorrect_heirarchy_member_report/index.html","fullTitle":"superadmin • team member master • incorrect heirarchy member"},{"id":143,"module":"superadmin","subModule":"team member master","reportName":"oft checker","path":"superadmin/team_member_master/oft_checker_report/index.html","fullTitle":"superadmin • team member master • oft checker"},{"id":144,"module":"superadmin","subModule":"team member master","reportName":"support rm","path":"superadmin/team_member_master/support_rm_report/index.html","fullTitle":"superadmin • team member master • support rm"},{"id":145,"module":"superadmin","subModule":"zoopException","reportName":"zoopException1","path":"superadmin/zoopException/zoopException1_report/index.html","fullTitle":"superadmin • zoopException • zoopException1"}];
+    let activeModule = 'ALL';
+    let searchQuery = '';
+
+    function renderReports() {
+      const container = document.getElementById('reportsGrid');
+      const filtered = reportsData.filter(item => {
+        const matchesModule = (activeModule === 'ALL') || (item.module === activeModule);
+        const matchesSearch = !searchQuery || 
+          item.fullTitle.toLowerCase().includes(searchQuery) ||
+          item.path.toLowerCase().includes(searchQuery);
+        return matchesModule && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <h3>No reports matching "${searchQuery}"</h3>
+            <p>Try clearing your search query or selecting another module.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        let badgeClass = item.module;
+        let badgeLabel = item.module;
+        if (item.module === 'orderFulFilmentChecklist') badgeLabel = 'Checklist';
+        if (item.module === 'orderFulfilment') badgeLabel = 'Fulfilment';
+
+        return `
+          <div class="report-card">
+            <div>
+              <div class="report-card-header">
+                <span class="module-badge ${badgeClass}">${badgeLabel}</span>
+                <span class="submodule-text" title="${item.subModule}">${item.subModule}</span>
+              </div>
+              <div class="report-title">${item.reportName}</div>
+              <div class="report-path-preview" title="${item.path}">${item.path}</div>
+            </div>
+            <div class="card-actions">
+              <a href="${item.path}" target="_blank" rel="noopener noreferrer" class="open-btn">
+                <span>View Full Report</span>
+                <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterByModule(moduleName) {
+      activeModule = moduleName;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === moduleName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderReports();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderReports();
+    }
+
+    // Initial render
+    renderReports();
+  </script>
+</body>
+</html>
